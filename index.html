@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- seguridad: solo deja cargar archivos de esta web y de Google Fonts. Si algún día usas imágenes de otra web, añade su dirección en img-src -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="noai, noimageai">
+<script>try{ if(top !== self) top.location = self.location; }catch(_){} // evita que otra web te meta dentro de un iframe</script>
+<title>DEADLY SWAMPED</title>
+<meta name="description" content="Deadly Swamped: a webtoon set in the world of Nyris. Read the chapters, explore the realms and meet the characters.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* colores y tipografías: aquí se cambia el look de toda la web */
+:root{
+  --negro:#0b070d; --vino:#1d0a14; --sangre:#b3122f; --brillo:#ff3d5e;
+  --hueso:#ece3e4; --suave:#a898a3;
+  --titulo:'Pirata One','Times New Roman',serif;
+  --elegante:'Cormorant Garamond',Georgia,serif;
+  --cuerpo:'Jost',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--negro);color:var(--hueso);font-family:var(--cuerpo);line-height:1.7;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--brillo);outline-offset:4px}
+h2{font-family:var(--titulo);font-weight:400;font-size:clamp(2.6rem,7vw,4.6rem);line-height:1;text-align:center;margin-bottom:3rem}
+h2::after{content:"";display:block;width:90px;height:2px;margin:1rem auto 0;background:linear-gradient(90deg,transparent,var(--brillo),transparent)}
+
+nav{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:1rem 5vw;background:linear-gradient(var(--negro),transparent)}
+nav .logo{font-family:var(--titulo);font-weight:400;font-size:1.6rem;letter-spacing:.02em;text-transform:none;cursor:pointer}
+nav ul{display:flex;gap:2rem;list-style:none;padding:0}
+nav a{text-decoration:none;font-size:.9rem;letter-spacing:.12em;text-transform:uppercase;transition:color .2s}
+nav a:hover{color:var(--brillo)}
+
+/* portada (la luna roja de detrás) */
+.hero{min-height:100svh;display:grid;place-items:center;text-align:center;padding:6rem 5vw 4rem;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;width:min(80vw,640px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 40% 35%,#d4223f,var(--sangre) 40%,#4a0a1a 75%);box-shadow:0 0 160px #b3122f88,0 0 40px #ff3d5e44;opacity:.85;animation:luna 2.4s ease-out both}
+.hero::after{content:"";position:absolute;inset:auto 0 0;height:35%;background:linear-gradient(transparent,var(--negro))}
+.hero>div{position:relative;z-index:2}
+.hero h1{font-family:var(--titulo);font-weight:400;font-size:clamp(3.4rem,14vw,10.5rem);line-height:.9;color:var(--hueso);
+  text-shadow:0 0 30px #000,0 6px 0 #1d0a14,0 0 60px #b3122f;animation:titulo 1.4s .3s cubic-bezier(.2,.8,.2,1) both}
+.hero p{font-family:var(--elegante);font-style:italic;font-size:clamp(1.3rem,3vw,1.9rem);max-width:32rem;margin:1.5rem auto 2.2rem;text-shadow:0 2px 12px #000;animation:frase 1.8s .9s cubic-bezier(.22,.61,.36,1) both;will-change:opacity,transform,filter}
+@keyframes luna{from{transform:translateY(120px) scale(.8);opacity:0}}
+@keyframes frase{from{opacity:0;transform:translateY(18px);filter:blur(8px)}}
+@keyframes titulo{from{opacity:0;letter-spacing:.3em;filter:blur(12px)}}
+.boton{display:inline-block;border:1px solid var(--brillo);background:#b3122fcc;color:#fff;padding:.9rem 2.4rem;text-decoration:none;letter-spacing:.12em;text-transform:uppercase;font-size:.9rem;
+  clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%);transition:background .25s,transform .25s}
+.boton:hover{background:var(--brillo);transform:translateY(-3px)}
+
+section{padding:7rem 5vw}
+.historia{text-align:center;background:linear-gradient(var(--negro),var(--vino) 50%,var(--negro))}
+.historia p{max-width:38rem;margin:0 auto 1.2rem;font-family:var(--elegante);font-size:1.5rem;line-height:1.6}
+
+/* personajes */
+.escena{position:relative;padding:0;background:radial-gradient(ellipse at 50% 100%,color-mix(in srgb,var(--mc,#7a1230) 60%,transparent),transparent 65%)}
+.escena h2{padding-top:5rem}
+.banda{overflow:hidden;padding:2rem 0 0;position:relative}
+.banda::after{content:"";position:absolute;inset:auto 0 0;height:90px;background:linear-gradient(transparent,var(--negro));pointer-events:none}
+.pista{display:flex;align-items:flex-end;width:max-content;animation:desliza 70s linear infinite}
+.banda:hover .pista{animation-play-state:paused}
+/* categorías con pocos personajes: quietos y centrados */
+.pista.fija{animation:none;width:auto;justify-content:center;flex-wrap:wrap;gap:0 1.5rem;padding:0 5vw}
+.pista.fija .pj{margin-left:0}
+@keyframes desliza{to{transform:translateX(-50%)}}
+.pj{all:unset;cursor:pointer;flex:none;width:230px;height:470px;margin-left:-45px;position:relative;transition:transform .4s cubic-bezier(.2,.9,.2,1),filter .4s}
+.pj:nth-child(3n+2){margin-bottom:-40px}
+.pj:nth-child(3n){margin-bottom:-15px}
+.pj svg,.pj img{width:100%;height:100%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 0 14px var(--c))}
+.pj .n{position:absolute;top:-6px;left:0;right:0;text-align:center;font-family:var(--titulo);font-size:1.7rem;opacity:0;transform:translateY(12px);transition:.3s;text-shadow:0 0 12px #000}
+.pista:hover .pj{filter:brightness(.55)}
+.pista .pj:hover,.pista .pj:focus-visible{filter:brightness(1.1);transform:translateY(-22px) scale(1.04);z-index:5}
+.pj:hover .n,.pj:focus-visible .n{opacity:1;transform:none}
+
+/* ficha del personaje, a pantalla completa */
+.ficha{position:fixed;inset:0;z-index:50;display:none;overflow:hidden;background:radial-gradient(circle at 30% 60%,color-mix(in srgb,var(--c) 45%,#000),var(--negro) 70%)}
+.ficha.abierta{display:block;animation:fundido .35s}
+@keyframes fundido{from{opacity:0}}
+.ficha .fondo{position:absolute;left:3vw;top:50%;transform:translateY(-50%);font-family:var(--titulo);font-size:clamp(8rem,28vw,24rem);line-height:.8;white-space:nowrap;color:transparent;-webkit-text-stroke:2px color-mix(in srgb,var(--c) 55%,transparent);opacity:.5;pointer-events:none}
+.ficha .fig{position:absolute;left:4vw;bottom:0;height:92vh;width:min(46vw,520px);animation:entra .8s cubic-bezier(.2,.9,.25,1) both}
+.ficha .fig svg,.ficha .fig img{width:100%;height:100%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 0 40px var(--c))}
+@keyframes entra{from{transform:translateX(220px) skewX(-8deg);opacity:0}}
+.ficha .info{position:absolute;right:6vw;top:50%;transform:translateY(-50%);width:min(42vw,34rem);animation:info .8s .2s both}
+@keyframes info{from{opacity:0;transform:translate(60px,-50%)}}
+.ficha .rol{font-family:var(--elegante);font-style:italic;font-size:1.6rem;color:var(--c);filter:brightness(1.5)}
+.ficha h3{font-family:var(--titulo);font-weight:400;font-size:clamp(3rem,8vw,6rem);line-height:.95;margin:.3rem 0 1.2rem}
+.ficha p.d{font-size:1.1rem;max-width:30rem;border-left:2px solid var(--c);padding-left:1.2rem}
+.ficha button{position:absolute;background:none;border:1px solid #fff4;color:var(--hueso);cursor:pointer;width:52px;height:52px;border-radius:50%;font-size:1.5rem;transition:.2s}
+.ficha button:hover{border-color:var(--brillo);color:var(--brillo)}
+.ficha .cerrar{top:1.2rem;right:1.2rem}
+.ficha .ant{left:1.2rem;top:50%}.ficha .sig{right:1.2rem;top:50%}
+
+/* mundos */
+.mundos{background:linear-gradient(var(--negro),var(--vino) 50%,var(--negro));text-align:center}
+.mundos>p{max-width:36rem;margin:-1.5rem auto 3.5rem;font-family:var(--elegante);font-size:1.45rem}
+.arcos{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1.5rem;max-width:1150px;margin:auto}
+.arco{all:unset;cursor:pointer;display:block;position:relative;box-sizing:border-box;min-height:25rem;padding:3.2rem 1.2rem 3rem;text-align:center;
+  border:1px solid var(--c);border-radius:999px 999px 0 0;transition:transform .35s,box-shadow .35s,filter .5s;
+  background:radial-gradient(circle at 50% 20%,color-mix(in srgb,var(--c) 50%,transparent),transparent 42%),linear-gradient(var(--vino),var(--negro))}
+.arco:hover,.arco:focus-visible{transform:translateY(-12px);box-shadow:0 0 45px color-mix(in srgb,var(--c) 50%,transparent)}
+.arco:focus-visible{outline:2px solid var(--brillo);outline-offset:4px}
+.arco svg{width:56px;height:56px;fill:none;stroke:var(--c);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px var(--c))}
+.arco h3{font-family:var(--titulo);font-weight:400;font-size:2rem;line-height:1.1;margin:.8rem 0 .5rem}
+.arco p{font-size:.95rem;color:var(--suave);line-height:1.5}
+.arco small{position:absolute;bottom:1.1rem;left:0;right:0;color:var(--c);letter-spacing:.1em;font-size:.75rem;text-transform:uppercase}
+.arco.sellado{border-style:dashed;filter:grayscale(.85) brightness(.6)}
+.arco.sellado:hover{filter:none}
+.arco.abierto{animation:grieta .9s}
+@keyframes grieta{15%{transform:translateX(-9px)}30%{transform:translateX(9px)}45%{transform:translateX(-6px)}60%{transform:translateX(6px)}}
+.tabs{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;padding:0 5vw;margin:-1.5rem 0 1rem}
+.tabs button{background:none;border:1px solid #fff3;color:var(--hueso);padding:.4rem 1.3rem;font:inherit;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:.2s}
+.tabs button:hover,.tabs button.on{border-color:var(--c,var(--brillo));color:var(--c,var(--brillo));box-shadow:0 0 18px color-mix(in srgb,var(--c,var(--brillo)) 40%,transparent)}
+
+/* sección Read */
+.leer-in{max-width:1100px;margin:auto}
+.port{aspect-ratio:3/4.2;border-radius:999px 999px 0 0;border:1px solid #b3122f99;display:grid;place-items:center;font-family:var(--titulo);font-size:5rem;color:#fff3;position:relative;overflow:hidden;
+  background:radial-gradient(circle at 50% 30%,#b3122f88 0,transparent 35%),linear-gradient(var(--vino),var(--negro));transition:box-shadow .3s,opacity .3s}
+.port img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.destacado{display:grid;grid-template-columns:minmax(140px,220px) 1fr;gap:2.5rem;align-items:center;padding:2rem;margin-bottom:3rem;border:1px solid #b3122f99;
+  background:linear-gradient(110deg,#b3122f40,transparent 65%),var(--vino);box-shadow:0 0 60px #b3122f33}
+.destacado .et{font-family:var(--elegante);font-style:italic;font-size:1.3rem;color:var(--brillo)}
+.destacado h3{font-family:var(--titulo);font-weight:400;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1;margin:.2rem 0 .4rem}
+.destacado .fe{color:var(--suave);font-size:.85rem;letter-spacing:.1em;text-transform:uppercase}
+.destacado p{font-family:var(--elegante);font-size:1.3rem;line-height:1.45;margin:1rem 0 1.5rem;max-width:34rem}
+.acciones{display:flex;gap:1rem;flex-wrap:wrap}
+.boton.sec{background:none;color:var(--hueso);border-color:#fff4;clip-path:none}
+.boton.sec:hover{border-color:var(--brillo);color:var(--brillo);background:none}
+.barra{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.barra .tabs{margin:0;padding:0}
+.ord{background:none;border:1px solid #fff3;color:var(--hueso);padding:.4rem 1.3rem;font:inherit;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:.2s}
+.ord:hover{border-color:var(--brillo);color:var(--brillo)}
+.prog{display:flex;align-items:center;gap:1rem;color:var(--suave);font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2.5rem}
+.prog i{flex:1;height:3px;background:#fff2;position:relative}
+.prog i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--p,0%);background:linear-gradient(90deg,var(--sangre),var(--brillo));box-shadow:0 0 10px var(--brillo)}
+.prog button{background:none;border:0;color:var(--suave);font:inherit;text-decoration:underline;cursor:pointer;text-transform:none;letter-spacing:0}
+.caps{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:2.5rem}
+.cap{position:relative;text-decoration:none;text-align:center;transition:transform .3s}
+.cap:hover{transform:translateY(-10px)}
+.cap:hover .port{box-shadow:0 0 40px #b3122f88}
+.cap strong{display:block;margin-top:1rem;font-family:var(--titulo);font-weight:400;font-size:1.6rem}
+.cap em{display:block;font-family:var(--elegante);font-size:1.1rem;color:var(--hueso)}
+.cap small{color:var(--suave)}
+.ins{position:absolute;top:1rem;left:50%;transform:translateX(-50%);z-index:2;padding:.15rem .8rem;font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;background:var(--brillo);color:#000}
+.ins.ok{background:#0b070dd9;color:var(--hueso);border:1px solid #fff4;font-weight:500}
+.cap.leido .port{opacity:.55}
+.cap.pronto{pointer-events:none;filter:grayscale(.8) brightness(.65)}
+.aviso{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-top:4rem;padding:1.5rem 2rem;border:1px dashed #b3122f99}
+.aviso p{font-family:var(--elegante);font-size:1.4rem;line-height:1.3}
+.aviso small{display:block;font-family:var(--cuerpo);font-size:.85rem;color:var(--suave);letter-spacing:.08em;text-transform:uppercase}
+
+.autor{background:linear-gradient(var(--negro),var(--vino));text-align:center}
+.autor p{max-width:34rem;margin:0 auto 2rem;font-family:var(--elegante);font-size:1.4rem}
+.redes{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+.redes a{border:1px solid #fff3;padding:.4rem 1.4rem;text-decoration:none;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;transition:.2s}
+.redes a:hover{border-color:var(--brillo);color:var(--brillo)}
+footer{text-align:center;padding:2.5rem;color:var(--suave);font-size:.85rem;background:var(--vino)}
+
+@media(max-width:760px){
+  nav ul{gap:1rem} nav a{font-size:.75rem}
+  .pj{width:170px;height:350px;margin-left:-32px}
+  .ficha .fig{height:52vh;width:80vw;left:50%;transform:translateX(-50%);animation:none}
+  .ficha .info{right:5vw;left:5vw;width:auto;top:auto;bottom:4vh;transform:none;animation:fundido .6s .2s both}
+  .ficha .fondo{top:25%}
+  .ficha h3{font-size:3rem}.ficha p.d{font-size:1rem}
+  .ficha .ant,.ficha .sig{top:30%}
+  .destacado{grid-template-columns:1fr;text-align:center;padding:1.5rem;gap:1.5rem}
+  .destacado .port{width:min(190px,60vw);margin:auto}
+  .destacado p{margin-inline:auto}.acciones{justify-content:center}
+  .barra{justify-content:center}.aviso{justify-content:center;text-align:center}
+}
+@media(max-width:560px){
+  nav{flex-direction:column;gap:.2rem;padding:.7rem 4vw .9rem;background:linear-gradient(var(--negro) 75%,transparent)}
+  nav .logo{font-size:1.3rem}
+  nav ul{gap:1.1rem} nav a{font-size:.7rem;letter-spacing:.08em}
+  section{padding:5rem 5vw}
+  .arcos{grid-template-columns:1fr 1fr;gap:1rem}
+  .arco{min-height:19rem;padding:2.4rem .8rem 2.6rem}
+  .arco:last-child:nth-child(odd){grid-column:1/-1}
+  .arco h3{font-size:1.5rem}.arco p{font-size:.85rem}
+  .arco svg{width:44px;height:44px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="./">DEADLY SWAMPED</a>
+  <ul><li><a href="#historia">Story</a></li><li><a href="#mundo">World</a></li><li><a href="#personajes">Characters</a></li><li><a href="#leer">Read</a></li></ul>
+</nav>
+
+<header class="hero">
+  <div>
+    <!-- cuando tengas logo, cambia el h1 por <img src="logo.png" alt="DEADLY SWAMPED" style="max-width:90%"> -->
+    <h1>DEADLY<br>SWAMPED</h1>
+    <p>Where the last flame dreams of the dead</p>
+    <a class="boton" href="#leer">Read chapter 1</a>
+  </div>
+</header>
+
+<section class="historia" id="historia">
+  <h2>The Story</h2>
+  <p>Write the synopsis here: the world, the conflict and the question that keeps readers turning pages.</p>
+  <p>Two or three short paragraphs work better than one long one.</p>
+</section>
+
+<section class="mundos" id="mundo">
+  <h2>The World of Nyris</h2>
+  <p>Nyris is divided into four realms, and a fifth lies hidden beneath them. Describe here what sets them against each other.</p>
+  <div class="arcos" id="arcos"></div>
+</section>
+
+<section class="escena" id="personajes">
+  <h2>Characters</h2>
+  <div class="tabs" id="tabs"></div>
+  <div class="banda"><div class="pista" id="pista"></div></div>
+</section>
+
+<section id="leer">
+  <h2>Read</h2>
+  <div class="leer-in">
+    <div id="destacado"></div>
+    <div class="barra"><div class="tabs" id="temps"></div><button class="ord" id="orden"></button></div>
+    <div class="prog" id="prog"></div>
+    <div class="caps" id="caps"></div>
+    <div class="aviso" id="aviso"></div>
+  </div>
+</section>
+
+<section class="autor">
+  <h2>Author</h2>
+  <p>Tell readers who you are in two lines and why you created Deadly Swamped.</p>
+  <div class="redes"><a href="#">Instagram</a><a href="#">X</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
+</section>
+
+<footer>© 2026 Your name · DEADLY SWAMPED</footer>
+
+<div class="ficha" id="ficha" role="dialog" aria-modal="true" aria-label="Character profile">
+  <div class="fondo" id="fFondo"></div>
+  <div class="fig" id="fFig"></div>
+  <div class="info"><p class="rol" id="fRol"></p><h3 id="fNombre"></h3><p class="d" id="fDesc"></p></div>
+  <button class="cerrar" id="cerrar" aria-label="Close">×</button>
+  <button class="ant" id="ant" aria-label="Previous">‹</button>
+  <button class="sig" id="sig" aria-label="Next">›</button>
+</div>
+
+<script src="capitulos.js"></script>
+<script>
+/* MUNDOS: el que lleva oculto:true sale sellado hasta que lo pulsan */
+const mundos = [
+  {id:"vulkan",    nombre:"Vulkan",     color:"#ff5a2c", icono:"M12 3c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-4-1-6 1-10z", desc:"What Vulkan is like, who rules it and what it wants."},
+  {id:"salina",    nombre:"Salina",     color:"#3aa0ff", icono:"M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z", desc:"What Salina is like, who rules it and what it wants."},
+  {id:"prithwin",  nombre:"Prithwin",   color:"#c79a4f", icono:"M2 20l7-12 4 7 3-4 6 9z", desc:"What Prithwin is like, who rules it and what it wants."},
+  {id:"sylphaerie",nombre:"Sylphaerie", color:"#8fe3d2", icono:"M3 9h11a3 3 0 1 0-3-3M3 14h15a3 3 0 1 1-3 3M3 19h7", desc:"What Sylphaerie is like, who rules it and what it wants."},
+  {id:"tenebris",  nombre:"Tenebris",   color:"#9b7bff", icono:"M5 11a7 7 0 0 1 14 0v4l-3 1v3H8v-3l-3-1zM9 12h.01M15 12h.01", oculto:true, desc:"The hidden realm beneath the other four. Reveal its secret here."}
+];
+const ICONO_SELLO = "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM9 9a3 3 0 1 1 4 3c-1 .6-1 1-1 2M12 17h.01";
+
+/* PERSONAJES (copia una línea para añadir otro)
+   mundo: vulkan, salina, prithwin, sylphaerie o tenebris
+   img: PNG sin fondo dentro de la carpeta de abajo. Si no existe sale una silueta de relleno
+   cuerpo, pelo y extra solo afectan a la silueta, los puedes ignorar cuando tengas el dibujo */
+/* carpeta de los PNG de los personajes (junto al index.html) */
+const CARPETA_IMG = "img/";
+
+const personajes = [
+  {nombre:"Kral",      mundo:"vulkan",     rol:"Main protagonist",      color:"#ff5a2c", img:"kral.png",      cuerpo:0, pelo:2, extra:"",        desc:"The main protagonist of Deadly Swamped. Add his personality, his past and what he wants."},
+  {nombre:"Noah",      mundo:"vulkan",     rol:"Character",             color:"#ffb02c", img:"noah.png",      cuerpo:1, pelo:1, extra:"",        desc:"Add a short description: personality, history and what they want."},
+  {nombre:"Lahara",    mundo:"vulkan",     rol:"Character",             color:"#ff3d5e", img:"lahara.png",    cuerpo:2, pelo:0, extra:"",        desc:"Add a short description: personality, history and what she wants."},
+  {nombre:"Minu",      mundo:"salina",     rol:"Secondary protagonist", color:"#3aa0ff", img:"minu.png",      cuerpo:1, pelo:0, extra:"",        desc:"A secondary protagonist. Add her personality, history and what she wants."},
+  {nombre:"Eribi",     mundo:"salina",     rol:"Secondary protagonist", color:"#6fc3ff", img:"eribi.png",     cuerpo:3, pelo:1, extra:"",        desc:"A secondary protagonist. Add his personality, history and what he wants."},
+  {nombre:"Vulpes",    mundo:"salina",     rol:"Villain",               color:"#1f6fd1", img:"vulpes.png",    cuerpo:0, pelo:3, extra:"",        desc:"The villain. Add his motives, his history and what he wants."},
+  {nombre:"Wiraya",    mundo:"prithwin",   rol:"Character",             color:"#c79a4f", img:"wiraya.png",    cuerpo:3, pelo:2, extra:"",        desc:"Add a short description: personality, history and what he wants."},
+  {nombre:"Dannaus",   mundo:"sylphaerie", rol:"Character",             color:"#8fe3d2", img:"dannaus.png",   cuerpo:2, pelo:3, extra:"",        desc:"Add a short description: personality, history and what she wants."},
+  {nombre:"Blaid",     mundo:"tenebris",   rol:"Protagonist",           color:"#9b7bff", img:"blaid.png",     cuerpo:0, pelo:1, extra:"",        desc:"A protagonist from the hidden realm of Tenebris. Add his personality, history and what he wants."},
+  {nombre:"Xin",       mundo:"tenebris",   rol:"Twin",                  color:"#d65bff", img:"xin.png",       cuerpo:1, pelo:2, extra:"",        desc:"One of the twins Xin and Xan. Add personality, history and what they want."},
+  {nombre:"Xan",       mundo:"tenebris",   rol:"Twin",                  color:"#b07bff", img:"xan.png",       cuerpo:1, pelo:0, extra:"",        desc:"One of the twins Xin and Xan. Add personality, history and what they want."},
+  {nombre:"Sigfried",  mundo:"tenebris",   rol:"Character",             color:"#7a6bff", img:"sigfried.png",  cuerpo:3, pelo:3, extra:"",        desc:"Add a short description: personality, history and what he wants."},
+  {nombre:"Lenore",    mundo:"tenebris",   rol:"Character",             color:"#e06bff", img:"lenore.png",    cuerpo:2, pelo:0, extra:"",        desc:"Add a short description: personality, history and what she wants."},
+  {nombre:"Edgar",     mundo:"tenebris",   rol:"Raven",                color:"#8a8fb5", img:"edgar.png",     cuerpo:1, pelo:1, extra:"alas",    desc:"A raven of Tenebris. Add his story, his personality and what he wants."}
+];
+
+/* franja de aviso del final de Read */
+const AVISO = {
+  texto:"New chapter every two weeks",
+  detalle:"Follow the comic so you never miss one",
+  enlaces:[{n:"Newsletter",u:"#"},{n:"Instagram",u:"#"},{n:"Ko-fi",u:"#"}]
+};
+
+/* de aquí para abajo es lo que hace funcionar la web */
+try { history.scrollRestoration = "manual"; } catch(_) {} // al recargar, la página vuelve arriba
+// el logo de arriba recarga la página
+document.querySelector(".logo").addEventListener("click", e => {
+  e.preventDefault();
+  try { if(location.hash) location.hash = ""; } catch(_) {}
+  scrollTo(0, 0);
+  try { location.reload(); } catch(_) {}
+});
+const $ = id => document.getElementById(id);
+const cuerpos = ["M100 110C60 130 40 250 20 420H180C160 250 140 130 100 110Z","M75 115H125L140 250 132 420H68L60 250Z","M82 115H118L150 300 178 420H22L50 300Z","M58 115H142L162 270 152 420H48L38 270Z"];
+const pelos = ["M70 80C68 40 90 38 100 38 112 38 132 42 130 80L142 210C120 195 118 120 100 100 82 120 80 195 58 210Z","M74 76C72 44 90 40 100 40 112 40 128 44 126 76 118 62 110 58 100 58 90 58 82 62 74 76Z","M72 80L66 46 84 58 92 30 102 54 116 32 120 56 136 44 128 80C118 64 82 64 72 80Z","M60 125C46 40 80 20 100 20 120 20 154 40 140 125L124 100C128 60 118 50 100 50 82 50 72 60 76 100Z"];
+const alas = '<path d="M100 140C20 90-14 170 8 280 40 225 62 212 92 205ZM100 140C180 90 214 170 192 280 160 225 138 212 108 205Z" fill="#2a0a14" stroke="COLOR" stroke-width="1.5"/>';
+const cuernos = '<path d="M78 56C58 40 56 18 66 6 72 28 82 38 90 46ZM122 56C142 40 144 18 134 6 128 28 118 38 110 46Z" fill="#150a10" stroke="COLOR" stroke-width="1.2"/>';
+
+function silueta(p,i){
+  const c = p.color, g = "g"+i;
+  return `<svg viewBox="-20 0 240 420" preserveAspectRatio="xMidYMax meet" aria-hidden="true" style="--c:${c}"><defs>
+    <linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}" stop-opacity=".55"/><stop offset=".6" stop-color="#1a0b14"/><stop offset="1" stop-color="#07040a"/></linearGradient></defs>
+    ${p.extra==="alas" ? alas.replace(/COLOR/g,c) : ""}
+    <path d="${cuerpos[p.cuerpo]}" fill="url(#${g})" stroke="${c}" stroke-width="1.5"/>
+    <path d="M90 100H110V118L100 128 90 118Z" fill="#cdbfc4"/>
+    <ellipse cx="100" cy="78" rx="23" ry="29" fill="#d7c8cc"/>
+    <path d="${pelos[p.pelo]}" fill="#0f070c" stroke="${c}" stroke-width="1" stroke-opacity=".7"/>
+    ${p.extra==="cuernos" ? cuernos.replace(/COLOR/g,c) : ""}
+    <circle cx="91" cy="82" r="2.6" fill="${c}"/><circle cx="109" cy="82" r="2.6" fill="${c}"/></svg>`;
+}
+const figura = (p,i) => p.img ? `<img src="${CARPETA_IMG}${p.img}" alt="${p.nombre}" data-k="${personajes.indexOf(p)}">` : silueta(p,i);
+// si no existe el PNG se pone la silueta
+addEventListener("error", e => {
+  const im = e.target;
+  if(im.tagName === "IMG" && im.dataset.k !== undefined)
+    im.outerHTML = silueta(personajes[im.dataset.k], "x" + Math.random().toString(36).slice(2));
+}, true);
+
+// variables
+const MAX_FIJOS = 5; // con este número de personajes o menos, la banda no se mueve
+let filtro = "todos", desbloqueado = false, visibles = [], actual = 0;
+const mundoDe = id => mundos.find(m => m.id === id);
+const oculto = p => mundoDe(p.mundo).oculto && !desbloqueado;
+
+// arcos de los mundos
+function pintaArcos(){
+  $("arcos").innerHTML = mundos.map(m => {
+    const sello = m.oculto && !desbloqueado;
+    return `<button class="arco${sello?" sellado":""}" style="--c:${m.color}" data-m="${m.id}">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="${sello?ICONO_SELLO:m.icono}"/></svg>
+      <h3>${sello?"???":m.nombre}</h3><p>${sello?"Something sleeps beneath the four realms…":m.desc}</p>
+      <small>${sello?"Tap to awaken it":"View characters"}</small></button>`;
+  }).join("");
+}
+function pintaTabs(){
+  const lista = [{id:"todos",nombre:"All",color:""}, ...mundos.filter(m => !m.oculto || desbloqueado)];
+  $("tabs").innerHTML = lista.map(m => `<button class="${m.id===filtro?"on":""}" ${m.color?`style="--c:${m.color}"`:""} data-m="${m.id}">${m.nombre}</button>`).join("");
+}
+// se duplica la fila para que el bucle no tenga corte
+function pintaBanda(){
+  visibles = personajes.map((p,i) => i).filter(i => !oculto(personajes[i]) && (filtro==="todos" || personajes[i].mundo===filtro));
+  // categoría con pocos personajes = sin movimiento
+  const fija = filtro !== "todos" && visibles.length <= MAX_FIJOS;
+  $("pista").classList.toggle("fija", fija);
+  let base = visibles.slice();
+  while(!fija && base.length && base.length < 9) base = base.concat(visibles);
+  const fila = (pref, extra) => base.map((i,n) => { const p = personajes[i];
+    return `<button class="pj" ${extra} style="--c:${p.color}" data-i="${i}" aria-label="${p.nombre}">${figura(p,pref+n)}<span class="n">${p.nombre}</span></button>`; }).join("");
+  $("pista").innerHTML = fila("a","") + (fija ? "" : fila("b",'tabindex="-1" aria-hidden="true"'));
+}
+function filtra(id){
+  filtro = id; const m = mundoDe(id);
+  $("personajes").style.setProperty("--mc", m ? m.color : "#7a1230");
+  pintaTabs(); pintaBanda();
+}
+$("arcos").addEventListener("click", e => {
+  const b = e.target.closest(".arco"); if(!b) return;
+  const m = mundoDe(b.dataset.m);
+  if(m.oculto && !desbloqueado){
+    desbloqueado = true; pintaArcos(); pintaTabs(); pintaBanda();
+    const n = document.querySelector('.arco[data-m="'+m.id+'"]'); n.classList.add("abierto"); n.focus();
+  } else { filtra(m.id); $("personajes").scrollIntoView({behavior:"smooth"}); }
+});
+$("tabs").addEventListener("click", e => { const b = e.target.closest("button"); if(b) filtra(b.dataset.m); });
+
+// ficha del personaje
+function abre(i){
+  actual = i;
+  const p = personajes[i], f = $("ficha");
+  f.style.setProperty("--c", p.color);
+  $("fFondo").textContent = p.nombre.split(" ")[0];
+  const fig = $("fFig"); fig.innerHTML = figura(p,"F"+i); fig.style.animation="none"; fig.offsetHeight; fig.style.animation="";
+  $("fRol").textContent = p.rol + ", " + mundoDe(p.mundo).nombre; $("fNombre").textContent = p.nombre; $("fDesc").textContent = p.desc;
+  f.classList.add("abierta"); document.body.style.overflow="hidden"; $("cerrar").focus();
+}
+const vecino = d => { const k = visibles.indexOf(actual); abre(visibles[(k + d + visibles.length) % visibles.length]); };
+const cierra = () => { $("ficha").classList.remove("abierta"); document.body.style.overflow=""; };
+$("pista").addEventListener("click", e => { const b = e.target.closest(".pj"); if(b) abre(+b.dataset.i); });
+$("cerrar").onclick = cierra;
+$("ant").onclick = () => vecino(-1);
+$("sig").onclick = () => vecino(1);
+addEventListener("keydown", e => {
+  if(!$("ficha").classList.contains("abierta")) return;
+  if(e.key==="Escape") cierra(); if(e.key==="ArrowLeft") vecino(-1); if(e.key==="ArrowRight") vecino(1);
+});
+pintaArcos(); filtra("todos");
+
+// capítulos (lo leído se guarda en el navegador de cada lector)
+const LS = "leidos_" + document.title;
+let leidos = []; try { leidos = JSON.parse(localStorage.getItem(LS) || "[]"); } catch(_) {}
+const guarda = () => { try { localStorage.setItem(LS, JSON.stringify(leidos)); } catch(_) {} };
+let orden = "desc", temp = "todas";
+const pub = c => !c.proximo;
+const fmt = c => c.fecha ? new Date(c.fecha + "T00:00").toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"}) : "Coming soon";
+const esNuevo = c => { const d = (Date.now() - new Date(c.fecha + "T00:00")) / 864e5; return pub(c) && d >= 0 && d <= 14; };
+const portada = (c,i) => `<div class="port">${c.img ? `<img src="${c.img}" alt="${c.titulo}">` : i+1}</div>`;
+
+function pintaLeer(){
+  const idx = capitulos.map((c,i) => i).filter(i => pub(capitulos[i]));
+  const ult = idx[idx.length-1], sinLeer = idx.find(i => !leidos.includes(i));
+  const u = capitulos[ult];
+  let acc = "";
+  if(leidos.length && sinLeer !== undefined) acc += `<a class="boton" href="${capitulos[sinLeer].enlace}" data-i="${sinLeer}">Continue: ${capitulos[sinLeer].titulo}</a><a class="boton sec" href="${u.enlace}" data-i="${ult}">Go to latest</a>`;
+  else acc += `<a class="boton" href="${u.enlace}" data-i="${ult}">Read now</a>` + (idx.length > 1 ? `<a class="boton sec" href="${capitulos[idx[0]].enlace}" data-i="${idx[0]}">Start from chapter 1</a>` : "");
+  $("destacado").innerHTML = u ? `<div class="destacado">${portada(u,ult)}<div>
+    <p class="et" style="margin:0;font-size:1.3rem">${esNuevo(u) ? "New chapter" : "Latest chapter"}</p>
+    <h3>${u.titulo}${u.nombre ? ": " + u.nombre : ""}</h3><div class="fe">${fmt(u)}</div>
+    ${u.sinopsis ? `<p>${u.sinopsis}</p>` : ""}<div class="acciones">${acc}</div></div></div>` : "";
+
+  const temps = [...new Set(capitulos.map(c => c.temporada).filter(Boolean))];
+  $("temps").innerHTML = temps.length > 1 ? ["todas", ...temps].map(t => `<button class="${t===temp?"on":""}" data-t="${t}">${t==="todas"?"All":t}</button>`).join("") : "";
+  $("orden").textContent = orden === "desc" ? "Newest first" : "Oldest first";
+
+  const n = idx.filter(i => leidos.includes(i)).length;
+  $("prog").innerHTML = `<span>Read ${n} of ${idx.length}</span><i style="--p:${idx.length ? n/idx.length*100 : 0}%"></i>${n ? '<button id="borra">Clear progress</button>' : ""}`;
+
+  let lista = capitulos.map((c,i) => i).filter(i => temp === "todas" || capitulos[i].temporada === temp);
+  if(orden === "desc") lista.reverse();
+  $("caps").innerHTML = lista.map(i => { const c = capitulos[i], l = leidos.includes(i);
+    return `<a class="cap${l?" leido":""}${c.proximo?" pronto":""}" href="${c.enlace}" data-i="${i}" ${c.proximo?'aria-disabled="true" tabindex="-1"':""}>
+      ${c.proximo ? '<span class="ins ok">Soon</span>' : esNuevo(c) ? '<span class="ins">New</span>' : l ? '<span class="ins ok">Read ✓</span>' : ""}
+      ${portada(c,i)}<strong>${c.titulo}</strong>${c.nombre ? `<em>${c.nombre}</em>` : ""}<small>${fmt(c)}</small></a>`; }).join("");
+
+  $("aviso").innerHTML = `<p>${AVISO.texto}<small>${AVISO.detalle}</small></p><div class="redes">${AVISO.enlaces.map(e => `<a href="${e.u}">${e.n}</a>`).join("")}</div>`;
+}
+$("leer").addEventListener("click", e => {
+  const l = e.target.closest("a[data-i]"), t = e.target.closest("[data-t]");
+  if(l && !leidos.includes(+l.dataset.i)){ leidos.push(+l.dataset.i); guarda(); setTimeout(pintaLeer, 300); }
+  if(t){ temp = t.dataset.t; pintaLeer(); }
+  if(e.target.closest("#orden")){ orden = orden === "desc" ? "asc" : "desc"; pintaLeer(); }
+  if(e.target.closest("#borra")){ leidos = []; guarda(); pintaLeer(); }
+});
+pintaLeer();
+</script>
+</body>
+</html>
