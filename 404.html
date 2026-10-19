@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b070d">
+<title>Page not found | DEADLY SWAMPED</title>
+<link rel="icon" href="/deadlyswamped/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--negro:#0b070d;--vino:#1d0a14;--sangre:#b3122f;--brillo:#ff3d5e;--hueso:#ece3e4;--suave:#a898a3;--titulo:'Pirata One','Times New Roman',serif;--elegante:'Cormorant Garamond',Georgia,serif;--cuerpo:'Jost',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+body{min-height:100svh;display:grid;place-items:center;text-align:center;padding:2rem 5vw;background:var(--negro);color:var(--hueso);font-family:var(--cuerpo);line-height:1.7;overflow:hidden;position:relative}
+body::before{content:"";position:absolute;width:min(80vw,560px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 40% 35%,#d4223f,var(--sangre) 40%,#4a0a1a 75%);box-shadow:0 0 160px #b3122f88,0 0 40px #ff3d5e44;opacity:.6}
+body::after{content:"";position:absolute;inset:auto 0 0;height:35%;background:linear-gradient(transparent,var(--negro))}
+main{position:relative;z-index:2}
+h1{font-family:var(--titulo);font-weight:400;font-size:clamp(6rem,28vw,14rem);line-height:.9;text-shadow:0 0 30px #000,0 6px 0 #1d0a14,0 0 60px #b3122f}
+p{font-family:var(--elegante);font-style:italic;font-size:clamp(1.3rem,3vw,1.9rem);max-width:32rem;margin:1.2rem auto 2.2rem;text-shadow:0 2px 12px #000}
+.acciones{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.boton{display:inline-block;border:1px solid var(--brillo);background:#b3122fcc;color:#fff;padding:.9rem 2.4rem;text-decoration:none;letter-spacing:.12em;text-transform:uppercase;font-size:.9rem;clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%);transition:background .25s,transform .25s}
+.boton:hover{background:var(--brillo);transform:translateY(-3px)}
+.boton.sec{background:none;color:var(--hueso);border-color:#fff4;clip-path:none}
+.boton.sec:hover{border-color:var(--brillo);color:var(--brillo);background:none}
+:focus-visible{outline:2px solid var(--brillo);outline-offset:4px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <h1>404</h1>
+  <p>This page has sunk into the swamp.</p>
+  <div class="acciones">
+    <a class="boton" href="/deadlyswamped/">Back to home</a>
+    <a class="boton sec" href="/deadlyswamped/#leer">Read the chapters</a>
+  </div>
+</main>
+</body>
+</html>

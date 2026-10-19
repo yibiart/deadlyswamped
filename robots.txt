@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yibiart.github.io/deadlyswamped/sitemap.xml

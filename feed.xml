@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DEADLY SWAMPED</title>
+    <link>https://yibiart.github.io/deadlyswamped/</link>
+    <description>Deadly Swamped: a webtoon set in the world of Nyris. New chapters every two weeks.</description>
+    <language>en</language>
+    <lastBuildDate>Wed, 07 Oct 2026 12:00:00 GMT</lastBuildDate>
+    <atom:link href="https://yibiart.github.io/deadlyswamped/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Chapter 3: Chapter title</title>
+      <link>https://yibiart.github.io/deadlyswamped/leer.html?c=2</link>
+      <guid isPermaLink="true">https://yibiart.github.io/deadlyswamped/leer.html?c=2</guid>
+      <pubDate>Wed, 07 Oct 2026 12:00:00 GMT</pubDate>
+      <description>One or two spoiler-free sentences that make readers want to start.</description>
+    </item>
+    <item>
+      <title>Chapter 2: Chapter title</title>
+      <link>https://yibiart.github.io/deadlyswamped/leer.html?c=1</link>
+      <guid isPermaLink="true">https://yibiart.github.io/deadlyswamped/leer.html?c=1</guid>
+      <pubDate>Sat, 26 Sep 2026 12:00:00 GMT</pubDate>
+      <description>One or two spoiler-free sentences that make readers want to start.</description>
+    </item>
+    <item>
+      <title>Chapter 1: Chapter title</title>
+      <link>https://yibiart.github.io/deadlyswamped/leer.html?c=0</link>
+      <guid isPermaLink="true">https://yibiart.github.io/deadlyswamped/leer.html?c=0</guid>
+      <pubDate>Sat, 12 Sep 2026 12:00:00 GMT</pubDate>
+      <description>One or two spoiler-free sentences that make readers want to start.</description>
+    </item>
+  </channel>
+</rss>

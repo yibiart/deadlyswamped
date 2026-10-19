@@ -3,12 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- seguridad: solo carga archivos de esta web y Google Fonts -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<!-- seguridad: solo carga archivos de esta web, Google Fonts y las estadísticas (GoatCounter) -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob: https://*.goatcounter.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://gc.zgo.at; connect-src https://*.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noai, noimageai">
 <script>try{ if(top !== self) top.location = self.location; }catch(_){} // que no te metan en un iframe</script>
 <title>Read | DEADLY SWAMPED</title>
+<meta name="description" content="Read DEADLY SWAMPED, a webtoon set in the world of Nyris.">
+<meta name="theme-color" content="#0b070d">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="DEADLY SWAMPED" href="feed.xml">
+<!-- vista previa al compartir. Si algún día cambias de dirección, cambia https://yibiart.github.io/deadlyswamped aquí y en SITE más abajo. Es la misma para todos los capítulos -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DEADLY SWAMPED">
+<meta property="og:title" content="Read DEADLY SWAMPED">
+<meta property="og:description" content="A webtoon set in the world of Nyris. Where the last flame dreams of the dead.">
+<meta property="og:image" content="https://yibiart.github.io/deadlyswamped/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Read DEADLY SWAMPED">
+<meta name="twitter:description" content="A webtoon set in the world of Nyris. Where the last flame dreams of the dead.">
+<meta name="twitter:image" content="https://yibiart.github.io/deadlyswamped/img/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -52,7 +68,31 @@ a{color:inherit}
 
 /* final del capítulo */
 .fin{text-align:center;padding:3rem 1rem 1.5rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.pie-redes{display:none;justify-content:center;gap:.6rem;padding-bottom:4rem}
+.pie-redes{display:none;justify-content:center;gap:.6rem;padding-bottom:1rem}
+.tip{display:flex;gap:.4rem 1.4rem;justify-content:center;flex-wrap:wrap;padding:0 1rem 4rem;color:var(--suave);font-size:.8rem;letter-spacing:.06em}
+.tip a{text-underline-offset:4px}.tip a:hover{color:var(--brillo)}
+@media(hover:none){.teclas{display:none}}
+
+/* aviso de contenido: una franja normal dentro de la página, no bloquea nada */
+.cw{margin-top:1.1rem;padding:.7rem 1rem;border-left:3px solid var(--sangre);background:#b3122f1f;color:var(--hueso);font-size:.9rem;line-height:1.5}
+.cw[hidden]{display:none}
+.cw strong{color:var(--brillo);font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.75rem;margin-right:.5rem}
+
+/* nota del autor */
+.nota{max-width:760px;margin:2.5rem auto 0;padding:0 1.2rem}
+.nota[hidden]{display:none}
+.nota>div{padding:1.4rem 1.6rem;border:1px solid #ffffff1f;border-left:3px solid var(--brillo);background:linear-gradient(110deg,#b3122f22,transparent 70%),var(--vino)}
+.nota h2{font-family:var(--titulo);font-weight:400;font-size:1.7rem;margin-bottom:.5rem}
+.nota p{font-family:var(--elegante);font-size:1.25rem;line-height:1.5;margin-top:.6rem}
+
+/* volver arriba y aviso de "sigues por aquí" */
+.arriba{position:fixed;right:1rem;bottom:1rem;z-index:11;width:46px;height:46px;border-radius:50%;border:1px solid #fff4;background:#0b070de6;color:var(--hueso);cursor:pointer;display:grid;place-items:center;padding:0;opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .25s,transform .25s,border-color .2s,color .2s}
+.arriba.ver{opacity:1;pointer-events:auto;transform:none}
+.arriba:hover{border-color:var(--brillo);color:var(--brillo)}
+.arriba svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.retoma{position:fixed;left:1rem;bottom:1rem;z-index:11;max-width:calc(100% - 5rem);display:flex;align-items:center;gap:.9rem;padding:.55rem 1rem;background:#0b070df2;border:1px solid #ffffff33;font-size:.85rem}
+.retoma[hidden]{display:none}
+.retoma button{background:none;border:0;color:var(--brillo);font:inherit;text-decoration:underline;cursor:pointer;white-space:nowrap;padding:0}
 
 @media(max-width:800px){
   .izq .redes{display:none}
@@ -91,9 +131,12 @@ a{color:inherit}
     <button class="btn" id="like" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg><span id="liketxt">Like</span></button>
     <time id="fecha"></time>
   </div>
+  <p class="cw" id="cw" hidden><strong>Content note</strong><span id="cwtxt"></span></p>
 </div>
 
 <main id="tira"></main>
+
+<section class="nota" id="nota" hidden><div><h2>Author's note</h2><div id="notatxt"></div></div></section>
 
 <div class="fin">
   <a class="btn" id="ant2" href="#">‹ Previous chapter</a>
@@ -101,6 +144,10 @@ a{color:inherit}
   <a class="btn" id="sig2" href="#">Next chapter ›</a>
 </div>
 <div class="pie-redes redes"></div>
+<p class="tip"><span class="teclas">Tip: ← → change chapter · ↑ ↓ scroll</span><a id="mail" href="#" hidden>Report a problem</a></p>
+
+<button class="arriba" id="arriba" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15l7-7 7 7"/></svg></button>
+<div class="retoma" id="retoma" role="status" hidden><span>Continuing where you left off</span><button id="reinicia">Start over</button></div>
 
 
 <script src="capitulos.js"></script>
@@ -115,13 +162,47 @@ const REDES = [
   {n:"YouTube",   u:"#", d:'<path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6z"/>'}
 ];
 
+/* aviso de contenido que sale en TODOS los capítulos (debajo del título, sin ventana emergente).
+   Para cambiarlo en un capítulo concreto pon aviso:"..." en capitulos.js, y aviso:"" si ese capítulo no lleva ninguno */
+const AVISO_CONTENIDO = "This story contains violence and dark themes. Reader discretion is advised.";
+
+/* tu correo partido en dos (anti-spam). Mientras esté vacío no sale el enlace "Report a problem" */
+const CONTACTO = {usuario:"yibivamp", dominio:"gmail.com"};
+
+/* estadísticas sin cookies (GoatCounter): pon el código de tucodigo.goatcounter.com. Vacío = desactivado */
+const STATS = "yibi";
+
+/* dirección de tu web, con barra al final (sirve para el enlace canónico de cada capítulo) */
+const SITE = "https://yibiart.github.io/deadlyswamped/";
+
 const c = +new URLSearchParams(location.search).get("c") || 0;
 const cap = typeof capitulos !== "undefined" ? capitulos[c] : null;
+try { history.scrollRestoration = "manual"; } catch(_) {} // la posición la restauramos nosotros, con las imágenes ya cargadas
+const POSKEY = "pos_" + c; // por dónde vas en este capítulo
+let listo = false;           // hasta que no se ha restaurado la posición no se guarda nada
 if(!cap || cap.proximo) location.replace("index.html#leer");
 else arranca();
 
 function arranca(){
-  document.title = cap.titulo + " | DEADLY SWAMPED";
+  const completo = cap.titulo + (cap.nombre ? ": " + cap.nombre : "");
+  document.title = completo + " | DEADLY SWAMPED";
+  const md = document.querySelector('meta[name=description]');
+  if(md) md.content = "Read " + completo + " of DEADLY SWAMPED, a webtoon set in the world of Nyris." + (cap.sinopsis ? " " + cap.sinopsis : "");
+
+  // enlace canónico de este capítulo (le dice a Google y a GoatCounter cuál es su dirección)
+  let can = document.querySelector('link[rel=canonical]');
+  if(!can){ can = document.createElement("link"); can.rel = "canonical"; document.head.appendChild(can); }
+  can.href = SITE + "leer.html?c=" + c;
+
+  // aviso de contenido (franja normal, nunca una ventana)
+  const aviso = cap.aviso !== undefined ? cap.aviso : AVISO_CONTENIDO;
+  if(aviso){ $("cwtxt").textContent = aviso; $("cw").hidden = false; }
+
+  // nota del autor: cada línea es un párrafo
+  if(cap.nota){
+    String(cap.nota).split("\n").filter(t => t.trim()).forEach(t => { const p = document.createElement("p"); p.textContent = t; $("notatxt").appendChild(p); });
+    $("nota").hidden = false;
+  }
   if(cap.nombre){ $("num").textContent = cap.titulo; $("tit").textContent = cap.nombre; }
   else { $("num").hidden = true; $("tit").textContent = cap.titulo; }
   if(cap.fecha) $("fecha").textContent = new Date(cap.fecha + "T00:00").toLocaleDateString("en-US", {month:"long", day:"numeric", year:"numeric"});
@@ -134,6 +215,7 @@ function arranca(){
   const paginas = Array.isArray(cap.paginas) ? cap.paginas.map(p => cap.carpeta ? cap.carpeta + "/" + p : p)
     : Array.from({length: cap.paginas || 0}, (_, i) => `${cap.carpeta}/${String(i+1).padStart(2,"0")}.${cap.ext || "jpg"}`);
   pinta(paginas);
+  restaura();
 
   // anterior / siguiente (no salta a capítulos sin publicar)
   const enlace = (a, i) => { const ok = i >= 0 && i < capitulos.length && !capitulos[i].proximo; a.href = ok ? "leer.html?c=" + i : "#"; a.setAttribute("aria-disabled", !ok); };
@@ -148,14 +230,77 @@ function arranca(){
 
   // probar con imágenes del ordenador (solo las ves tú)
   if(new URLSearchParams(location.search).has("probar")) $("probar").hidden = false;
-  $("prueba").onchange = e => pinta([...e.target.files].sort((a,b) => a.name.localeCompare(b.name, undefined, {numeric:true})).map(f => URL.createObjectURL(f)));
+  $("prueba").onchange = e => { listo = false; pinta([...e.target.files].sort((a,b) => a.name.localeCompare(b.name, undefined, {numeric:true})).map(f => URL.createObjectURL(f))); };
 
   // un poco de disuasión contra copiar las páginas (no es una protección real)
   $("tira").addEventListener("contextmenu", e => e.preventDefault());
   $("tira").addEventListener("dragstart", e => e.preventDefault());
 
+  // teclado: ← → cambian de capítulo (↑ ↓ y la barra espaciadora hacen scroll como siempre)
+  addEventListener("keydown", e => {
+    if(e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || e.repeat) return;
+    if(/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
+    const a = e.key === "ArrowLeft" ? $("ant") : e.key === "ArrowRight" ? $("sig") : null;
+    if(a && a.getAttribute("aria-disabled") !== "true"){ e.preventDefault(); guardaPos(); location.href = a.href; }
+  });
+
+  // volver arriba
+  const reduce = matchMedia("(prefers-reduced-motion:reduce)").matches;
+  $("arriba").onclick = () => scrollTo({top:0, behavior: reduce ? "auto" : "smooth"});
+
+  // recordar por dónde vas (se guarda en el navegador de cada lector)
+  let tPos; const guardaLuego = () => { clearTimeout(tPos); tPos = setTimeout(guardaPos, 250); };
+  addEventListener("scroll", guardaLuego, {passive:true});
+  addEventListener("pagehide", guardaPos);
+  document.addEventListener("visibilitychange", () => { if(document.visibilityState === "hidden") guardaPos(); });
+  $("reinicia").onclick = () => { try { localStorage.removeItem(POSKEY); } catch(_) {} $("retoma").hidden = true; scrollTo(0, 0); };
+
+  // enlace para avisar de errores
+  if(CONTACTO.usuario && CONTACTO.dominio){
+    $("mail").href = "mailto:" + CONTACTO.usuario + "@" + CONTACTO.dominio + "?subject=" + encodeURIComponent("Problem in " + completo);
+    $("mail").hidden = false;
+  }
+
+  // estadísticas sin cookies: cada capítulo cuenta como su propia página
+  if(STATS){
+    window.goatcounter = {path: "/read/chapter-" + (c + 1)};
+    const g = document.createElement("script");
+    g.async = true; g.src = "https://gc.zgo.at/count.js";
+    g.dataset.goatcounter = "https://" + STATS + ".goatcounter.com/count";
+    document.head.appendChild(g);
+  }
+
   // barra de progreso
-  addEventListener("scroll", () => { const h = document.documentElement; $("prog").style.width = (h.scrollTop / ((h.scrollHeight - h.clientHeight) || 1) * 100) + "%"; }, {passive:true});
+  addEventListener("scroll", () => { const h = document.documentElement; $("prog").style.width = (h.scrollTop / ((h.scrollHeight - h.clientHeight) || 1) * 100) + "%"; $("arriba").classList.toggle("ver", h.scrollTop > 800); }, {passive:true});
+}
+
+/* POSICIÓN dentro del capítulo: se guarda la página en la que estás y cuánto has bajado de ella
+   (así funciona aunque las imágenes carguen a distinto ritmo o cambies de pantalla) */
+function hijos(){ return [...$("tira").children]; }
+function topDe(el){ return el.getBoundingClientRect().top + scrollY; }
+function guardaPos(){
+  const L = hijos(); if(!listo || !L.length) return;
+  try{
+    const termino = $("tira").getBoundingClientRect().bottom <= innerHeight + 30;
+    if(termino || scrollY < 60){ localStorage.removeItem(POSKEY); return; } // capítulo terminado o sin empezar: la próxima vez desde arriba
+    let k = 0; for(let i = 0; i < L.length; i++){ if(topDe(L[i]) <= scrollY + 2) k = i; else break; }
+    const r = L[k].getBoundingClientRect();
+    localStorage.setItem(POSKEY, JSON.stringify({p:k, f:+Math.min(1, Math.max(0, -r.top / (r.height || 1))).toFixed(3)}));
+  }catch(_){}
+}
+async function restaura(){
+  let g = null; try{ g = JSON.parse(localStorage.getItem(POSKEY)); }catch(_){}
+  const L = hijos();
+  if(!g || !(g.p > 0 || g.f > .02) || g.p >= L.length || new URLSearchParams(location.search).has("probar")){ listo = true; return; }
+  // las páginas anteriores se cargan ya para que el scroll caiga en el sitio exacto
+  L.slice(0, g.p + 1).forEach(i => { if(i.tagName === "IMG") i.loading = "eager"; });
+  const espera = L.slice(0, g.p + 1).filter(i => i.tagName === "IMG" && !i.complete)
+    .map(i => new Promise(r => { i.addEventListener("load", r, {once:true}); i.addEventListener("error", r, {once:true}); }));
+  await Promise.race([Promise.all(espera), new Promise(r => setTimeout(r, 5000))]);
+  const el = hijos()[g.p];
+  scrollTo(0, topDe(el) + g.f * el.offsetHeight);
+  $("retoma").hidden = false; setTimeout(() => { $("retoma").hidden = true; }, 9000);
+  setTimeout(() => { listo = true; }, 400);
 }
 
 function pinta(lista){
