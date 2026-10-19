@@ -48,9 +48,14 @@ h2::after{content:"";display:block;width:90px;height:2px;margin:1rem auto 0;back
 
 nav{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:1rem 5vw;background:linear-gradient(var(--negro),transparent)}
 nav .logo{font-family:var(--titulo);font-weight:400;font-size:1.6rem;letter-spacing:.02em;text-transform:none;cursor:pointer}
-nav ul{display:flex;gap:2rem;list-style:none;padding:0}
+nav ul{display:flex;align-items:center;gap:2rem;list-style:none;padding:0}
 nav a{text-decoration:none;font-size:.9rem;letter-spacing:.12em;text-transform:uppercase;transition:color .2s}
 nav a:hover{color:var(--brillo)}
+/* el botón Read del menú: una burbuja que late suavemente para llamar la atención */
+nav a.cta{position:relative;display:inline-block;padding:.4rem 1.3rem;border:1px solid var(--brillo);border-radius:999px;background:linear-gradient(135deg,var(--sangre),#7d0c20);color:#fff;font-weight:600;animation:latido 2.6s ease-in-out infinite;transition:background .25s,transform .25s}
+nav a.cta:hover{background:var(--brillo);color:#fff;transform:translateY(-2px)}
+nav a.cta.nuevo::after{content:"NEW";position:absolute;top:-11px;right:-8px;padding:.05rem .45rem;border-radius:999px;background:#fff;color:#000;font-size:.55rem;font-weight:700;letter-spacing:.1em;line-height:1.5}
+@keyframes latido{0%,100%{box-shadow:0 0 0 0 #ff3d5e77,0 0 14px #ff3d5e55}50%{box-shadow:0 0 0 10px #ff3d5e00,0 0 24px #ff3d5e99}}
 
 /* portada (la luna roja de detrás) */
 .hero{min-height:100svh;display:grid;place-items:center;text-align:center;padding:6rem 5vw 4rem;position:relative;overflow:hidden}
@@ -174,20 +179,40 @@ section{padding:7rem 5vw}
 .aviso small{display:block;font-family:var(--cuerpo);font-size:.85rem;color:var(--suave);letter-spacing:.08em;text-transform:uppercase}
 
 /* mapa de Nyris */
-.mapa{position:relative;max-width:900px;aspect-ratio:16/10;margin:0 auto 3.5rem;border:1px solid #fff2;overflow:hidden;
-  background:radial-gradient(ellipse at 50% 50%,#2a0f1d,var(--negro) 78%)}
-.mapa>svg,.mapa>img{position:absolute;inset:0;width:100%;height:100%;display:block}
-.mapa>img{object-fit:cover}
-.punto{all:unset;cursor:pointer;position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.35rem;text-align:center;transition:transform .3s}
-.punto i{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;border:1px solid var(--c);background:#0b070de6;box-shadow:0 0 22px color-mix(in srgb,var(--c) 55%,transparent);transition:box-shadow .3s}
-.punto svg{width:26px;height:26px;fill:none;stroke:var(--c);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.punto b{font-family:var(--titulo);font-weight:400;font-size:1.5rem;line-height:1;text-shadow:0 0 10px #000,0 0 4px #000}
-.punto:hover,.punto:focus-visible{transform:translate(-50%,-50%) scale(1.1)}
-.punto:hover i,.punto:focus-visible i{box-shadow:0 0 36px var(--c)}
-.punto:focus-visible{outline:2px solid var(--brillo);outline-offset:6px}
-.punto.sellado i{border-style:dashed;filter:grayscale(.85) brightness(.7)}
-.punto.sellado b{color:var(--suave)}
-.punto.abierto i{animation:grieta .9s}
+.abrir-mapa{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.6rem;margin:-1.5rem auto 3.5rem;padding:.4rem 1rem;text-transform:uppercase;letter-spacing:.12em;font-size:.8rem;color:var(--hueso);transition:transform .3s,color .2s}
+.abrir-mapa i{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;border:1px solid var(--brillo);background:#b3122f40;box-shadow:0 0 26px #b3122f88;transition:box-shadow .3s,background .3s}
+.abrir-mapa svg{width:30px;height:30px;fill:none;stroke:var(--hueso);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.abrir-mapa:hover,.abrir-mapa:focus-visible{transform:translateY(-4px);color:var(--brillo)}
+.abrir-mapa:hover i,.abrir-mapa:focus-visible i{box-shadow:0 0 40px var(--brillo);background:#b3122f80}
+.abrir-mapa:focus-visible{outline:2px solid var(--brillo);outline-offset:4px}
+.mapaov{position:fixed;inset:0;z-index:50;display:none;flex-direction:column;align-items:center;justify-content:center;gap:1rem;padding:4.5rem 4vw 1.5rem;background:radial-gradient(circle at 50% 55%,#3a1226,var(--negro) 72%)}
+.mapaov.abierta{display:flex;animation:fundido .35s}
+.mapaov h3{font-family:var(--titulo);font-weight:400;font-size:clamp(1.7rem,4vw,2.5rem);line-height:1;text-align:center}
+.mapaov .cerrar{position:absolute;top:1.2rem;right:1.2rem;width:52px;height:52px;border-radius:50%;background:none;border:1px solid #fff4;color:var(--hueso);cursor:pointer;font-size:1.5rem;transition:.2s}
+.mapaov .cerrar:hover{border-color:var(--brillo);color:var(--brillo)}
+.mapa-caja{width:min(100%,1000px,calc(100svh - 14rem));display:flex;flex-direction:column;gap:.8rem}
+.mapa{position:relative;width:100%;aspect-ratio:1/1;border:1px solid #fff2;overflow:hidden;background:#000}
+.mapa>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;-webkit-user-drag:none;user-select:none}
+.reino,.lugar{all:unset;cursor:pointer;position:absolute;left:var(--x);top:var(--y);translate:-50% -50%;z-index:3;display:grid;place-items:center;border-radius:50%;background:#0b070de6;border:1px solid var(--c);transition:scale .25s,box-shadow .25s}
+.reino{width:42px;height:42px;box-shadow:0 0 0 3px #0b070d99,0 0 22px color-mix(in srgb,var(--c) 70%,transparent)}
+.lugar{width:30px;height:30px;box-shadow:0 0 0 2px #0b070d88,0 2px 10px #000a}
+.reino svg,.lugar svg{fill:none;stroke:var(--c);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.reino svg{width:24px;height:24px}.lugar svg{width:18px;height:18px}
+.reino:hover,.reino:focus-visible,.reino.activo,.lugar:hover,.lugar:focus-visible,.lugar.activo{scale:1.18;box-shadow:0 0 0 3px var(--c),0 0 26px var(--c)}
+.reino:focus-visible,.lugar:focus-visible{outline:2px solid var(--brillo);outline-offset:5px}
+.reino.sellado{border-style:dashed;filter:grayscale(.8) brightness(.85);z-index:4}
+.reino.abierto{animation:grieta .9s}
+/* mientras Tenebris está sellado, una mancha borrosa tapa su nombre en el dibujo */
+.tapa{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);translate:-50% -50%;z-index:2;pointer-events:none;
+  backdrop-filter:blur(8px) brightness(.4);-webkit-backdrop-filter:blur(8px) brightness(.4);
+  -webkit-mask-image:radial-gradient(ellipse closest-side,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse closest-side,#000 62%,transparent 100%)}
+.tapa.roto{animation:disuelve 1.4s forwards}
+@keyframes disuelve{to{opacity:0;scale:1.4}}
+.mapa-info{min-height:4.8rem;display:flex;align-items:center;justify-content:space-between;gap:.8rem 1rem;flex-wrap:wrap;padding:.8rem 1rem;border:1px solid #fff2;background:#0b070dd9}
+.mapa-info b{display:block;font-family:var(--titulo);font-weight:400;font-size:1.5rem;line-height:1.1}
+.mapa-info span{color:var(--suave);font-size:.95rem;line-height:1.4}
+.mapa-info .vacio{margin:0;color:var(--suave);font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+.mapa-info .boton{padding:.5rem 1.4rem;font-size:.8rem;cursor:pointer;font-family:inherit}
 
 /* botón volver arriba */
 .arriba{position:fixed;right:1rem;bottom:1rem;z-index:19;width:46px;height:46px;border-radius:50%;border:1px solid #fff4;background:#0b070de6;color:var(--hueso);cursor:pointer;display:grid;place-items:center;padding:0;opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .25s,transform .25s,border-color .2s,color .2s}
@@ -227,10 +252,14 @@ footer{text-align:center;padding:2.5rem;color:var(--suave);font-size:.85rem;back
   nav{flex-direction:column;gap:.2rem;padding:.7rem 4vw .9rem;background:linear-gradient(var(--negro) 75%,transparent)}
   nav .logo{font-size:1.3rem}
   nav ul{gap:1.1rem} nav a{font-size:.7rem;letter-spacing:.08em}
+  nav a.cta{padding:.3rem .95rem}
   section{padding:5rem 5vw}
   .arcos{grid-template-columns:1fr 1fr;gap:1rem}
-  .mapa{aspect-ratio:1/1.05}
-  .punto i{width:38px;height:38px}.punto svg{width:20px;height:20px}.punto b{font-size:1.15rem}
+  .mapa-caja{width:100%}
+  .mapaov{padding:3.6rem 4vw 1rem;gap:.7rem}
+  .reino{width:34px;height:34px}.reino svg{width:20px;height:20px}
+  .lugar{width:26px;height:26px}.lugar svg{width:15px;height:15px}
+  .mapa-info b{font-size:1.25rem}
   .arco{min-height:19rem;padding:2.4rem .8rem 2.6rem}
   .arco:last-child:nth-child(odd){grid-column:1/-1;justify-self:center;width:calc((100% - 1rem)/2)}
   .arco h3{font-size:1.5rem}.arco p{font-size:.85rem}
@@ -252,7 +281,7 @@ footer{text-align:center;padding:2.5rem;color:var(--suave);font-size:.85rem;back
 
 <nav>
   <a class="logo" href="./">DEADLY SWAMPED</a>
-  <ul><li><a href="#historia">Story</a></li><li><a href="#mundo">World</a></li><li><a href="#personajes">Characters</a></li><li><a href="#leer">Read</a></li></ul>
+  <ul><li><a href="#historia">Story</a></li><li><a href="#mundo">World</a></li><li><a href="#personajes">Characters</a></li><li><a class="cta" id="navLeer" href="#leer">Read</a></li></ul>
 </nav>
 
 <header class="hero">
@@ -273,7 +302,7 @@ footer{text-align:center;padding:2.5rem;color:var(--suave);font-size:.85rem;back
 <section class="mundos" id="mundo">
   <h2>The World of Nyris</h2>
   <p>Nyris is divided into four realms, and a fifth lies hidden beneath them. Describe here what sets them against each other.</p>
-  <div class="mapa" id="mapa" role="group" aria-label="Map of Nyris"></div>
+  <button class="abrir-mapa" id="abrirMapa" aria-haspopup="dialog"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg></i><span>Open the map</span></button>
   <div class="arcos" id="arcos"></div>
 </section>
 
@@ -307,6 +336,12 @@ footer{text-align:center;padding:2.5rem;color:var(--suave);font-size:.85rem;back
 
 <footer>© 2026 YIBIART · DEADLY SWAMPED</footer>
 
+<div class="mapaov" id="mapaov" role="dialog" aria-modal="true" aria-label="Map of Nyris">
+  <h3>Map of Nyris</h3>
+  <div class="mapa-caja"><div class="mapa" id="mapa"></div><div class="mapa-info" id="mapaInfo" aria-live="polite"></div></div>
+  <button class="cerrar" id="cerrarMapa" aria-label="Close">×</button>
+</div>
+
 <button class="arriba" id="arriba" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15l7-7 7 7"/></svg></button>
 
 <div class="ficha" id="ficha" role="dialog" aria-modal="true" aria-label="Character profile">
@@ -321,18 +356,32 @@ footer{text-align:center;padding:2.5rem;color:var(--suave);font-size:.85rem;back
 <script src="capitulos.js"></script>
 <script>
 /* MUNDOS: el que lleva oculto:true sale sellado hasta que lo pulsan
-   mapa: posición del reino en el mapa de Nyris, en % (x = de izquierda a derecha, y = de arriba a abajo)
+   mapa: dónde va la chincheta del reino sobre el dibujo del mapa, en % (x = de izquierda a derecha, y = de arriba a abajo)
    raza: gentilicio que sale en el recuadro de la ficha (un personaje puede tener la suya propia añadiendo raza:"..." en su línea) */
 const mundos = [
-  {id:"vulkan", mapa:{x:19,y:51}, raza:"Igni",    nombre:"Vulkan",     color:"#ff5a2c", icono:"M12 3c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-4-1-6 1-10z", desc:"What Vulkan is like, who rules it and what it wants."},
-  {id:"salina", mapa:{x:81,y:51}, raza:"Aquo",    nombre:"Salina",     color:"#3aa0ff", icono:"M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z", desc:"What Salina is like, who rules it and what it wants."},
-  {id:"prithwin", mapa:{x:50,y:80}, raza:"Terrae",  nombre:"Prithwin",   color:"#c79a4f", icono:"M2 20l7-12 4 7 3-4 6 9z", desc:"What Prithwin is like, who rules it and what it wants."},
-  {id:"sylphaerie", mapa:{x:50,y:22}, raza:"Venti",nombre:"Sylphaerie", color:"#8fe3d2", icono:"M3 9h11a3 3 0 1 0-3-3M3 14h15a3 3 0 1 1-3 3M3 19h7", desc:"What Sylphaerie is like, who rules it and what it wants."},
-  {id:"tenebris", mapa:{x:50,y:51}, raza:"Inmortu",  nombre:"Tenebris",   color:"#9b7bff", icono:"M5 11a7 7 0 0 1 14 0v4l-3 1v3H8v-3l-3-1zM9 12h.01M15 12h.01", oculto:true, desc:"The hidden realm beneath the other four. Reveal its secret here."}
+  {id:"vulkan", mapa:{x:22.5,y:66}, raza:"Igni",    nombre:"Vulkan",     color:"#ff5a2c", icono:"M12 3c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-4-1-6 1-10z", desc:"What Vulkan is like, who rules it and what it wants."},
+  {id:"salina", mapa:{x:29,y:21}, raza:"Aquo",    nombre:"Salina",     color:"#3aa0ff", icono:"M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z", desc:"What Salina is like, who rules it and what it wants."},
+  {id:"prithwin", mapa:{x:77.5,y:70}, raza:"Terrae",  nombre:"Prithwin",   color:"#c79a4f", icono:"M2 20l7-12 4 7 3-4 6 9z", desc:"What Prithwin is like, who rules it and what it wants."},
+  {id:"sylphaerie", mapa:{x:89,y:21}, raza:"Venti",nombre:"Sylphaerie", color:"#8fe3d2", icono:"M3 9h11a3 3 0 1 0-3-3M3 14h15a3 3 0 1 1-3 3M3 19h7", desc:"What Sylphaerie is like, who rules it and what it wants."},
+  {id:"tenebris", mapa:{x:45,y:46}, raza:"Inmortu",  nombre:"Tenebris",   color:"#9b7bff", icono:"M5 11a7 7 0 0 1 14 0v4l-3 1v3H8v-3l-3-1zM9 12h.01M15 12h.01", oculto:true, desc:"The hidden realm beneath the other four. Reveal its secret here."}
 ];
-/* MAPA: si tienes un mapa dibujado, pon su archivo aquí (por ejemplo "img/mapa.jpg") y ajusta mapa:{x,y} de cada mundo.
-   Mientras esté vacío se usa un mapa decorativo generado */
-const MAPA_IMG = "";
+/* MAPA: el dibujo de Nyris (img/mapa.webp). Si lo cambias por otro, ajusta la posición de las chinchetas */
+const MAPA_IMG = "img/mapa.webp";
+
+/* LUGARES del mapa: puntos de interés sobre el dibujo. x e y en % (0 a 100, desde la esquina de arriba a la izquierda)
+   mundo: el reino al que pertenece (de ahí sale el color). Si ese reino es el oculto, el lugar no sale hasta despertarlo
+   color: solo si el lugar no es de ningún reino. n = nombre, t = descripción, icono = dibujo del icono */
+const LUGARES = [
+  {id:"capital",  mundo:"vulkan",     x:38, y:73, n:"The Capital",          t:"Vulkan's great city, full of towering buildings.",          icono:"M3 21V10h5v11M8 21V4h6v17M14 21V8h7v13M3 21h18"},
+  {id:"pantano",  mundo:"salina",     x:17, y:30, n:"Swamp Houses",         t:"Homes built among the mud and water of Salina.",            icono:"M4 12l8-6 8 6v3H4zM2 20c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0"},
+  {id:"torre",    mundo:"salina",     x:52, y:24, n:"The Mysterious Tower", t:"A tower rises alone from the middle of the water.",         icono:"M9 21V9l3-5 3 5v12M7 21h10M12 12v3"},
+  {id:"arboles",  mundo:"sylphaerie", x:84, y:40, n:"Treetop Homes",        t:"Houses float among the trees of Sylphaerie.",               icono:"M12 2a6 6 0 0 1 5 9H7a6 6 0 0 1 5-9zM12 11v3M7 18h10l-1.5 3h-7z"},
+  {id:"barrio",   mundo:"prithwin",   x:86, y:63, n:"The Adobe Quarter",    t:"Low houses of baked earth, painted in bright colours.",     icono:"M3 21h18M5 21V12h6v9M13 21V8a4 4 0 0 1 8 0v13"},
+  {id:"puerta",   mundo:"tenebris",   x:50, y:58, n:"Gate of Tenebris",     t:"The entrance to the hidden realm beneath Nyris.",           icono:"M5 21V10a7 7 0 0 1 14 0v11M9 21v-6a3 3 0 0 1 6 0v6"},
+  {id:"mercado",  color:"#e8c27a",    x:62, y:58, n:"The Market",           t:"A busy market right beside the gate of Tenebris.",          icono:"M3 20L12 5l9 15zM12 20v-5"}
+];
+/* zona del dibujo que se tapa (centro y tamaño en %) mientras Tenebris está sellado: es donde el mapa escribe su nombre */
+const SELLO_MAPA = {x:47, y:53, w:22, h:11};
 
 /* CONTACTO: tu correo partido en dos para que los robots de spam no lo encuentren. Mientras esté vacío no sale nada */
 const CONTACTO = {usuario:"yibivamp", dominio:"gmail.com"};
@@ -430,22 +479,40 @@ function pintaArcos(){
 // despierta el reino oculto (desde el mapa o desde las tarjetas: es el mismo sello)
 function desbloquea(id, donde){
   desbloqueado = true; pintaArcos(); pintaMapa(); pintaTabs(); pintaBanda();
-  document.querySelectorAll('.arco[data-m="'+id+'"], .punto[data-m="'+id+'"]').forEach(n => n.classList.add("abierto"));
-  const f = document.querySelector(donde + '[data-m="'+id+'"]'); if(f) f.focus();
+  const arco = document.querySelector('.arco[data-m="'+id+'"]'), reino = document.querySelector('.reino[data-k="m:'+id+'"]');
+  [arco, reino].forEach(n => n && n.classList.add("abierto"));
+  const f = donde === ".arco" ? arco : reino; if(f) f.focus();
+  muestraInfo("m:" + id);
 }
-// mapa de Nyris: las costas se dibujan con ruido para que parezcan irregulares
+// mapa de Nyris: tu dibujo con las chinchetas de los reinos y los lugares encima
 function pintaMapa(){
-  const fondo = MAPA_IMG ? `<img src="${MAPA_IMG}" alt="">` : `<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-    <defs><filter id="costa" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7" result="r"/><feDisplacementMap in="SourceGraphic" in2="r" scale="9"/></filter></defs>
-    <g stroke="#ffffff" stroke-opacity=".06" stroke-width="1" vector-effect="non-scaling-stroke"><path d="M25 0V100M50 0V100M75 0V100M0 25H100M0 50H100M0 75H100" vector-effect="non-scaling-stroke"/></g>
-    <g filter="url(#costa)">${mundos.map((m,i) => {
-      const sello = m.oculto && !desbloqueado, rx = m.oculto ? 9 : 16 + (i%2), ry = m.oculto ? 10 : 15 + (i%2);
-      return `<ellipse cx="${m.mapa.x}" cy="${m.mapa.y}" rx="${rx}" ry="${ry}" fill="${sello ? "#000" : m.color}" fill-opacity="${sello ? .5 : .22}" stroke="${sello ? "#ffffff" : m.color}" stroke-opacity="${sello ? .25 : .8}" stroke-width="1.4" ${sello ? 'stroke-dasharray="4 4"' : ""} vector-effect="non-scaling-stroke"/>`; }).join("")}</g></svg>`;
-  $("mapa").innerHTML = fondo + mundos.map(m => {
+  const reinos = mundos.map(m => {
     const sello = m.oculto && !desbloqueado;
-    return `<button class="punto${sello?" sellado":""}" style="--c:${m.color};--x:${m.mapa.x}%;--y:${m.mapa.y}%" data-m="${m.id}" aria-label="${sello ? "Hidden realm. Tap to awaken it" : m.nombre + ": view characters"}">
-      <i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${sello?ICONO_SELLO:m.icono}"/></svg></i><b>${sello?"???":m.nombre}</b></button>`;
+    const x = sello ? SELLO_MAPA.x : m.mapa.x, y = sello ? SELLO_MAPA.y : m.mapa.y;
+    return `<button class="reino${sello?" sellado":""}" style="--c:${m.color};--x:${x}%;--y:${y}%" data-k="m:${m.id}" aria-label="${sello ? "Hidden realm. Tap to awaken it" : m.nombre}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${sello?ICONO_SELLO:m.icono}"/></svg></button>`;
   }).join("");
+  const lugares = LUGARES.filter(l => !(l.mundo && mundoDe(l.mundo).oculto && !desbloqueado)).map(l =>
+    `<button class="lugar" style="--c:${l.color || mundoDe(l.mundo).color};--x:${l.x}%;--y:${l.y}%" data-k="l:${l.id}" aria-label="${l.n}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${l.icono}"/></svg></button>`).join("");
+  const tapa = `<div class="tapa${desbloqueado?" roto":""}" style="--x:${SELLO_MAPA.x}%;--y:${SELLO_MAPA.y}%;--w:${SELLO_MAPA.w}%;--h:${SELLO_MAPA.h}%"></div>`;
+  $("mapa").innerHTML = `<img src="${MAPA_IMG}" alt="Illustrated map of Nyris: Salina in the north-west, Sylphaerie in the north-east, Vulkan in the south-west and Prithwin in the south-east." draggable="false">${tapa}${reinos}${lugares}`;
+  muestraInfo(null);
+}
+// cuadro de texto que hay debajo del mapa
+function muestraInfo(k){
+  let html = '<p class="vacio">Tap a place to learn more</p>';
+  if(k){
+    const [tipo, id] = k.split(":");
+    if(tipo === "m"){
+      const m = mundoDe(id);
+      html = (m.oculto && !desbloqueado) ? '<div><b>???</b><span>Something sleeps beneath the four realms…</span></div>'
+        : `<div><b style="color:${m.color}">${m.nombre}</b><span>${m.raza ? "Home of the " + m.raza + ". " : ""}${m.desc}</span></div><button class="boton sec" data-ver="${m.id}">View characters</button>`;
+    } else {
+      const l = LUGARES.find(x => x.id === id);
+      html = `<div><b style="color:${l.color || mundoDe(l.mundo).color}">${l.n}</b><span>${l.t}</span></div>`;
+    }
+  }
+  $("mapaInfo").innerHTML = html;
+  document.querySelectorAll("#mapa [data-k]").forEach(b => b.classList.toggle("activo", b.dataset.k === k));
 }
 function pintaTabs(){
   const lista = [{id:"todos",nombre:"All",color:""}, ...mundos.filter(m => !m.oculto || desbloqueado)];
@@ -515,11 +582,24 @@ $("arcos").addEventListener("click", e => {
   if(m.oculto && !desbloqueado) desbloquea(m.id, ".arco");
   else { filtra(m.id); $("personajes").scrollIntoView({behavior:"smooth"}); }
 });
+// ventana del mapa (se abre y se cierra como la ficha de un personaje)
+function abreMapa(){ $("mapaov").classList.add("abierta"); document.body.style.overflow = "hidden"; $("cerrarMapa").focus(); }
+function cierraMapa(foco = true){ $("mapaov").classList.remove("abierta"); document.body.style.overflow = ""; if(foco) $("abrirMapa").focus(); }
+$("abrirMapa").onclick = abreMapa;
+$("cerrarMapa").onclick = () => cierraMapa();
+$("mapaov").addEventListener("click", e => { if(e.target === $("mapaov")) cierraMapa(); });
+addEventListener("keydown", e => { if(e.key === "Escape" && $("mapaov").classList.contains("abierta")) cierraMapa(); });
+$("mapa").addEventListener("mouseover", e => { const b = e.target.closest("[data-k]"); if(b && matchMedia("(hover:hover)").matches) muestraInfo(b.dataset.k); });
+$("mapa").addEventListener("focusin", e => { const b = e.target.closest("[data-k]"); if(b) muestraInfo(b.dataset.k); });
 $("mapa").addEventListener("click", e => {
-  const b = e.target.closest(".punto"); if(!b) return;
-  const m = mundoDe(b.dataset.m);
-  if(m.oculto && !desbloqueado) desbloquea(m.id, ".punto");
-  else { filtra(m.id); $("personajes").scrollIntoView({behavior:"smooth"}); }
+  const b = e.target.closest("[data-k]"); if(!b) return;
+  const [tipo, id] = b.dataset.k.split(":");
+  if(tipo === "m" && mundoDe(id).oculto && !desbloqueado){ desbloquea(id, ".reino"); return; }
+  muestraInfo(b.dataset.k);
+});
+$("mapaInfo").addEventListener("click", e => {
+  const b = e.target.closest("[data-ver]"); if(!b) return;
+  cierraMapa(false); filtra(b.dataset.ver); $("personajes").scrollIntoView({behavior:"smooth"});
 });
 $("tabs").addEventListener("click", e => { const b = e.target.closest("button"); if(b) filtra(b.dataset.m); });
 
@@ -566,6 +646,7 @@ function pintaLeer(){
   const idx = CAPS.map((c,i) => i).filter(i => pub(CAPS[i]));
   const ult = idx[idx.length-1], sinLeer = idx.find(i => !leidos.includes(i));
   const u = CAPS[ult];
+  $("navLeer").classList.toggle("nuevo", !!u && esNuevo(u));
   let acc = "";
   if(u){
   if(leidos.length && sinLeer !== undefined) acc += `<a class="boton" href="${CAPS[sinLeer].enlace}" data-i="${sinLeer}">Continue: ${CAPS[sinLeer].titulo}</a><a class="boton sec" href="${u.enlace}" data-i="${ult}">Go to latest</a>`;
